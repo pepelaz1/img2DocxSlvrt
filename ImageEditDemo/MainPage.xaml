@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="ImageEditDemo.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480">
+  <Grid x:Name="LayoutRoot" Background="LightGreen">
+		<StackPanel Orientation="Vertical">
+			<Border Background="Green" CornerRadius="16" Margin="16,16,16,0">
+				<Border.Effect>
+					<DropShadowEffect BlurRadius="12" Opacity="0.6" />
+				</Border.Effect>
+				<StackPanel Orientation="Horizontal">
+					<Button x:Name="btnOpen" Width="116" Height="32" Content="Add image" FontSize="14" Foreground="DarkGreen" BorderBrush="LightGreen" BorderThickness="4" Margin="12,12,0,12" Click="btnAddImage_Click" />
+					<Button x:Name="btnGenerate" Width="116" Height="32" Content="Generate" FontSize="14" Foreground="DarkGreen" BorderBrush="LightGreen" BorderThickness="4" Margin="12,12,0,12" Click="btnGenerate_Click" />
+				</StackPanel>
+            </Border>
+            <Border Background="Green" CornerRadius="16" Margin="16" >
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="12" Opacity="0.6" />
+                </Border.Effect>
+                <StackPanel Orientation="Horizontal" >
+                    <ListBox x:Name="lbDocItems" Grid.Row="1" ItemsSource="{Binding Items}"  Background="Green" Margin="16,16,16,16" Foreground="White" BorderThickness="0" KeyUp="lbDocItems_KeyUp" SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Filename}"></TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </Border>    
+			<Border Background="Green" CornerRadius="16" Margin="16">
+				<Border.Effect>
+					<DropShadowEffect BlurRadius="12" Opacity="0.6" />
+				</Border.Effect>
+				<Grid>
+					<Image x:Name="Photo" Width="800" Height="600" Margin="16" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="Photo_MouseLeftButtonDown" MouseMove="Photo_MouseMove" MouseLeftButtonUp="Photo_MouseLeftButtonUp">
+						<Image.RenderTransform>
+							<ScaleTransform x:Name="ZoomTransform" />
+						</Image.RenderTransform>
+						<Image.Resources>
+							<Storyboard x:Name="ZoomStoryboard">
+								<DoubleAnimation Storyboard.TargetName="ZoomTransform" Storyboard.TargetProperty="ScaleX" From="0.0" To="1.0" Duration="0:0:0.25" />
+								<DoubleAnimation Storyboard.TargetName="ZoomTransform" Storyboard.TargetProperty="ScaleY" From="0.0" To="1.0" Duration="0:0:0.25" />
+							</Storyboard>
+						</Image.Resources>
+					</Image>
+                     <Canvas x:Name="RectCanvas" Width="800" Height="600">
+						<Rectangle x:Name="Rect" Stroke="Red" Fill="#60ffffff" Visibility="Collapsed" />
+					</Canvas>
+                </Grid>
+			</Border>
+		</StackPanel>
+	</Grid>
+</UserControl>
